@@ -33,6 +33,7 @@ class _PeriodicTableAppState extends State<PeriodicTableApp> {
       }
     }
 
+
     setState(() {
       if (elementsFound.isNotEmpty) {
         _result = elementsFound.join(' ');
@@ -73,6 +74,23 @@ class _PeriodicTableAppState extends State<PeriodicTableApp> {
       },
     );
   }
+  List<Color> _boxColors = [
+    Colors.blue,
+    Colors.green,
+    Colors.red,
+    Colors.orange,
+    Colors.purple,
+    Colors.teal,
+    Colors.indigo,
+    Colors.amber,
+    Colors.deepOrange,
+    Colors.cyan,
+    Colors.deepPurple,
+    Colors.lime,
+    Colors.lightBlue,
+    Colors.pink,
+    Colors.yellow,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -135,6 +153,8 @@ class _PeriodicTableAppState extends State<PeriodicTableApp> {
                     alignment: WrapAlignment.start,
                     children: _result.split(' ').map((element) {
                       final index = periodicTableElements.keys.toList().indexOf(element.toLowerCase()) + 1;
+                      final color = _boxColors[index % _boxColors.length]; // Assign color based on atomic number
+
                       return GestureDetector(
                         onTap: () {
                           _showElementInfo(context, element);
@@ -144,7 +164,7 @@ class _PeriodicTableAppState extends State<PeriodicTableApp> {
                           height: 50.0,
                           margin: EdgeInsets.all(4.0),
                           decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color: color,
                             borderRadius: BorderRadius.circular(5.0),
                           ),
                           alignment: Alignment.center,
