@@ -3,6 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const MaterialApp(
+    title: 'Periodic Table Element Checker',
     home: PeriodicTableApp(),
   ));
 }
