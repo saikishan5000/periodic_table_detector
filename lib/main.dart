@@ -33,13 +33,12 @@ class _PeriodicTableAppState extends State<PeriodicTableApp> {
       }
     }
 
-
     setState(() {
       if (elementsFound.isNotEmpty) {
         _result = elementsFound.join(' ');
         _showResult = true;
       } else {
-        _result = "Oops! We cannot spell it with periodic elements.";
+        _result = "Oops! We cannot spell it with elements of periodic table.";
         _showResult = true;
       }
     });
@@ -74,11 +73,11 @@ class _PeriodicTableAppState extends State<PeriodicTableApp> {
       },
     );
   }
+
   List<Color> _boxColors = [
     Colors.blue,
     Colors.green,
     Colors.red,
-    Colors.orange,
     Colors.purple,
     Colors.teal,
     Colors.indigo,
@@ -97,102 +96,223 @@ class _PeriodicTableAppState extends State<PeriodicTableApp> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Periodic Table Checker'),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(20.0),
-        color: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Flexible(
-              child: TextField(
-                controller: _sentenceController,
-                maxLines: null, // Allows the text field to expand vertically
-                decoration: InputDecoration(
-                  labelText: 'Enter a sentence',
-                  border: OutlineInputBorder(),
-                  fillColor: Colors.white,
-                  filled: true,
+        backgroundColor: Colors.white,
+        // elevation: 1,
+        title: Text('Periodic Table Element Checker',style: TextStyle(fontFamily: 'Noto Sans',fontWeight: FontWeight.w900),),
+        actions: [
+          IconButton(
+            onPressed: () {
+              // Handle GitHub icon tap
+            },
+            icon: Icon(
+              Icons.language,
+              size: 24.0,
+              color: Colors.deepOrange,
+            ),
+
+          ),
+        ],      ),
+      body: Stack(
+        children: [
+          Container(color: Color(0xF4FF4500),),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 50, vertical:  60),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                    "lib/assets/bg.jpg"),
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                  Color(0xFFFF4500).withOpacity(0.1),
+                  BlendMode.dstATop,
                 ),
               ),
             ),
-            SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () {
-                if (_sentenceController.text.isNotEmpty) {
-                  checkPeriodicTable();
-                  FocusScope.of(context).unfocus();
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text('Please enter a sentence.'),
-                  ));
-                }
-              },
-              child: Text(
-                'Check',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purpleAccent,
-                textStyle: TextStyle(color: Colors.white),
-              ),
-            ),
-            SizedBox(height: 20.0),
-            if (_showResult)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (!_result.contains("Oops"))
-                    Text(
-                      'Congratulations! Your comment can be spelled using the elements of the periodic table:',
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                  SizedBox(height: 10.0),
-                  Wrap(
-                    alignment: WrapAlignment.start,
-                    children: _result.split(' ').map((element) {
-                      final index = periodicTableElements.keys.toList().indexOf(element.toLowerCase()) + 1;
-                      final color = _boxColors[index % _boxColors.length]; // Assign color based on atomic number
-
-                      return GestureDetector(
-                        onTap: () {
-                          _showElementInfo(context, element);
-                        },
-                        child: Container(
-                          width: 50.0,
-                          height: 50.0,
-                          margin: EdgeInsets.all(4.0),
-                          decoration: BoxDecoration(
-                            color: color,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          alignment: Alignment.center,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '$index',
-                                style: TextStyle(color: Colors.white, fontSize: 12),
-                              ),
-                              Text(
-                                element,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              SizedBox(height: 5),
-                            ],
-                          ),
-                        ),
-                      );
-                    }).toList(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  // width: 497.72,
+                  // height: 48,
+                  constraints: BoxConstraints(maxHeight: 400),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(32),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0x5E000000).withOpacity(0.3),
+                        blurRadius: 12,
+                        offset: Offset(0, 1),
+                        spreadRadius: 1,
+                      ),
+                    ],
                   ),
-                ],
+                  child: TextField(
+                    controller: _sentenceController,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      labelText: 'Enter a sentence',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32),
+                        borderSide: BorderSide(
+                          color:
+                          Colors.grey.withOpacity(0.5), // Adjust opacity here
+                        ),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20.0),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_sentenceController.text.isNotEmpty) {
+                      checkPeriodicTable();
+                      FocusScope.of(context).unfocus();
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('Please enter a sentence.'),
+                      ));
+                    }
+                  },
+                  child: Text(
+                    'Check',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blueAccent),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32),
+                        side: BorderSide(
+                          color: Colors.blueAccent,
+                          width: 1,
+                        ),
+                      ),
+                    ),
+                    elevation: MaterialStateProperty.all<double>(0),
+                    overlayColor:
+                    MaterialStateProperty.all<Color>(Colors.transparent),
+                    shadowColor:
+                    MaterialStateProperty.all<Color>(Colors.transparent),
+                  ),
+                ),
+                SizedBox(height: 20.0),
+                if (_showResult)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (!_result.contains("Oops"))
+                        Text(
+                          'Congratulations! Your comment can be spelled using the elements of the periodic table:',
+                          style: TextStyle(fontSize: 16.0, color: Colors.white),
+                        ),
+                      SizedBox(height: 10.0),
+                      if (!_result.contains("Oops"))
+                        Wrap(
+                          alignment: WrapAlignment.start,
+                          children: _result.split(' ').map((element) {
+                            final index = periodicTableElements.keys
+                                .toList()
+                                .indexOf(element.toLowerCase()) +
+                                1;
+                            final color = _boxColors[index %
+                                _boxColors
+                                    .length]; // Assign color based on atomic number
+
+                            return GestureDetector(
+                              onTap: () {
+                                _showElementInfo(context, element);
+                              },
+                              child: Container(
+                                width: 50.0,
+                                height: 50.0,
+                                margin: EdgeInsets.all(4.0),
+                                decoration: BoxDecoration(
+                                  color: color,
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                                alignment: Alignment.center,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '$index',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 12),
+                                    ),
+                                    Text(
+                                      element,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      if (_result.contains("Oops"))
+                        Text(
+                          '$_result',
+                          style: TextStyle(fontSize: 16.0, color: Colors.white),
+                        ),
+                    ],
+                  ),
+              ],
+            ),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child:                   Container(
+              width: double.infinity,
+              height:40,
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+              decoration: BoxDecoration(color: Colors.white),
+              child: Center(
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Website built by ',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontFamily: 'Noto Sans',
+                          fontWeight: FontWeight.w500,
+                          height: 0.06,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Sai Kishan',
+                        style: TextStyle(
+                          color: Color(0xFFFF4500),
+                          fontSize: 16,
+                          fontFamily: 'Noto Sans',
+                          fontWeight: FontWeight.w500,
+                          height: 0.06,
+                        ),
+                      ),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
-          ],
-        ),
+            )
+
+          ),
+        ],
       ),
     );
   }
+
 
   @override
   void dispose() {
@@ -444,4 +564,3 @@ const Map<String, Map<String, dynamic>> periodicTableData = {
   'ts': {'atomicNumber': 117, 'symbol': 'Ts', 'atomicWeight': 294},
   'og': {'atomicNumber': 118, 'symbol': 'Og', 'atomicWeight': 294},
 };
-
