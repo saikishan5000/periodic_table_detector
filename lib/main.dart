@@ -1,20 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: PeriodicTableApp(),
   ));
 }
 
 class PeriodicTableApp extends StatefulWidget {
+  const PeriodicTableApp({super.key});
+
   @override
-  _PeriodicTableAppState createState() => _PeriodicTableAppState();
+  PeriodicTableAppState createState() => PeriodicTableAppState();
 }
 
-class _PeriodicTableAppState extends State<PeriodicTableApp> {
+class PeriodicTableAppState extends State<PeriodicTableApp> {
   final TextEditingController _sentenceController = TextEditingController();
   String _result = '';
   bool _showResult = false;
@@ -57,7 +57,7 @@ class _PeriodicTableAppState extends State<PeriodicTableApp> {
           title: Center(child: Column(
             children: [
               Text(elementData?['name']),
-              Divider(color: Colors.grey),
+              const Divider(color: Colors.grey),
 
             ],
           )),
@@ -84,7 +84,7 @@ class _PeriodicTableAppState extends State<PeriodicTableApp> {
     );
   }
 
-  List<Color> _boxColors = [
+  final List<Color> _boxColors = [
     Colors.blue,
     Colors.green,
     Colors.red,
@@ -212,17 +212,6 @@ class _PeriodicTableAppState extends State<PeriodicTableApp> {
                       ));
                     }
                   },
-                  child: const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Text(
-                      'Check',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w900,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
                   style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.blueAccent),
@@ -240,6 +229,17 @@ class _PeriodicTableAppState extends State<PeriodicTableApp> {
                         MaterialStateProperty.all<Color>(Colors.transparent),
                     shadowColor:
                         MaterialStateProperty.all<Color>(Colors.transparent),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                      'Check',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 18,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20.0),
@@ -299,7 +299,7 @@ class _PeriodicTableAppState extends State<PeriodicTableApp> {
                         ),
                       if (_result.contains("Oops"))
                         Text(
-                          '$_result',
+                          _result,
                           style: const TextStyle(
                               fontSize: 16.0, color: Colors.white),
                         ),
@@ -327,7 +327,7 @@ class _PeriodicTableAppState extends State<PeriodicTableApp> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                     decoration: const BoxDecoration(color: Colors.white),
-                    child: Center(
+                    child: const Center(
                       child: Text.rich(
                         TextSpan(
                           children: [
