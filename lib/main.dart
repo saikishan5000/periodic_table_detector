@@ -249,7 +249,7 @@ class PeriodicTableAppState extends State<PeriodicTableApp> {
                     children: [
                       if (!_result.contains("Oops"))
                         const Text(
-                          'Congratulations! Your comment can be spelled using the elements of the periodic table:',
+                          'WOW! Your comment can be spelled using the elements of the periodic table:',
                           style: TextStyle(fontSize: 16.0, color: Colors.white),
                         ),
                       const SizedBox(height: 10.0),
